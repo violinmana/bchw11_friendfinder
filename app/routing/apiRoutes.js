@@ -19,7 +19,30 @@ module.exports = app => {
             image: ''
         }
 
+        // Variables for Checking
+        let difference = 0
+        let matchDiff = 50
 
+        // Check Compatibility
+        for (let i = 0; i < friends.length; i++) {
+            difference = 0
+            for (let j = 0; j < friends[i].scores.length; j++) {
+                difference += Math.abs(friends[i].scores[j] - newFriend.scores[j])
+                if (difference <= matchDiff) {
+                    match.name = friends[i].name,
+                        match.image = friends[i].image,
+                        matchDiff = difference
+                }
+            }
+        }
+
+        // Add new friend to list
+        friends.push(newFriend);
+
+        console.log(match);
+
+        // Send back JSON of best match
+        res.json(match);
 
     })
 }
